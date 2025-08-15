@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime hay • Vietsub</title>
+  <style>
+    :root {
+      --bg:#0b0f19; --card:#121826; --soft:#1b2233; --text:#e6e6e6; --muted:#9aa4b2;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: sans-serif;
+    }
+    .meta {
+      display: flex;
+      gap: 10px;
+      padding: 16px;
+    }
+    .thumb {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      background: var(--soft);
+    }
+    .title {
+      margin: 0;
+    }
+    .desc {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .chipbar {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px;
+      flex-wrap: wrap;
+    }
+    .chip {
+      background: var(--soft);
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      padding: 16px;
+    }
+    input, select {
+      background: var(--card);
+      border: none;
+      color: var(--text);
+      padding: 8px;
+      border-radius: 8px;
+      flex: 1;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      padding: 16px;
+    }
+    .card {
+      background: var(--card);
+      border-radius: 8px;
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    .card a {
+      display: block;
+      padding: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="meta">
+    <div class="thumb" aria-hidden="true"></div>
+    <div>
+      <h2 class="title">Xem anime miễn phí</h2>
+      <p class="desc">Anime vietsub miễn phí chỉ có tại duyvu8529</p>
+    </div>
+  </div>
+
+  <div class="chipbar">
+    <span class="chip">Phím tắt: Space ⏯</span>
+    <span class="chip">Nhớ vị trí xem</span>
+    <span class="chip">Chế độ rạp</span>
+  </div>
+
+  <div class="toolbar">
+    <input type="text" id="search" placeholder="Tìm anime...">
+    <select id="filter">
+      <option value="">Tất cả thể loại</option>
+      <option value="Shoujou Ai">Shoujou Ai</option>
+      <option value="Shounen">H
+      Shounen</option>
+      <option value="Tình cảm">Tình cảm</option>
+    </select>
+  </div>
+
+  <div class="grid" id="animeList"></div>
+
+  <script>
+    const data = [
+      {name: "Ngoại Cảm Ngàn Sao", genre: "Shoujou Ai", img: "ncns.jpg", link: "https://duyvu8529.github.io/Hoshikuzu-Telepath/"},
+      {name: "Tensei Shitara Slime Datta Ken", genre: "Shounen", img: "Tensura.jpg", link:"https://duyvu8529.github.io/Tensura/"},
+      {name: "Kaguya-sama", genre: "Hài hước", img: "https://i.imgur.com/Qwtb0ls.jpg", link: "#"},
+      {name: "Your Name", genre: "Tình cảm", img: "https://i.imgur.com/JvZpCGl.jpg", link: "#"},
+    ];
+
+    const list = document.getElementById("animeList");
+    const search = document.getElementById("search");
+    const filter = document.getElementById("filter");
+
+    function render() {
+      const keyword = search.value.toLowerCase();
+      const genre = filter.value;
+      list.innerHTML = "";
+      data
+        .filter(a => a.name.toLowerCase().includes(keyword) && (genre === "" || a.genre === genre))
+        .forEach(a => {
+          list.innerHTML += `
+            <div class="card">
+              <a href="${a.link}">
+                <img src="${a.img}" alt="${a.name}">
+                ${a.name}
+              </a>
+            </div>
+          `;
+        });
+    }
+
+    search.addEventListener("input", render);
+    filter.addEventListener("change", render);
+
+    render();
+  </script>
+
+</body>
+</html>
